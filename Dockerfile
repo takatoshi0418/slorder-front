@@ -5,7 +5,7 @@ WORKDIR /var/www
 RUN npm install npm -g
 RUN npm install express
 
-EXPOSE 8080
+EXPOSE 80
 
 COPY slorder/dist/ /var/www/
 COPY docker/server.js /var/www/server.js
