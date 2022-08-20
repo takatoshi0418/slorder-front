@@ -34,6 +34,13 @@ Vue.prototype.$getProjectStatus = function(value) {
     }
   }
 }
+Vue.prototype.$getProjectStatusLabel = function(value) {
+  for (let status of Vue.prototype.$projectStatus) {
+    if (status.value === value) {
+      return status.label;
+    }
+  }
+}
 
 Vue.prototype.$projectHistoryKinds = [
   {id: 0, label: i18n.tc('common.new_create')},

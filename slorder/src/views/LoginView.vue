@@ -1,14 +1,26 @@
 <template>
   <v-container>
-    <ValidationObserver v-slot="{invalid}" ref="observer">
+    <ValidationObserver
+      v-slot="{invalid}"
+      ref="observer"
+    >
       <form @submit.prevent="submit">
-        <ValidationProvider rules="required" v-slot="{errors}" :name="$t('common.username')">
+        <ValidationProvider
+          rules="required"
+          v-slot="{errors}"
+          :name="$t('common.username')"
+        >
           <v-text-field
             v-model="username"
             :label="$t('common.username')"
-            :error-messages="errors" />
+            :error-messages="errors"
+          />
         </ValidationProvider>
-        <ValidationProvider rules="required" v-slot="{errors}" :name="$t('common.password')">
+        <ValidationProvider
+          rules="required"
+          v-slot="{errors}"
+          :name="$t('common.password')"
+        >
           <v-text-field
             v-model="password"
             :label="$t('common.password')"
@@ -16,9 +28,16 @@
             :type="show ? 'text' : 'password'"
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="show = !show"
-            autocomplete="on" />
+            autocomplete="on"
+          />
         </ValidationProvider>
-        <v-btn type="submit" :disabled="invalid" class="px-12">{{$t('common.login')}}</v-btn>
+        <v-btn
+          type="submit"
+          :disabled="invalid"
+          class="px-12"
+        >
+          {{ $t('common.login') }}
+        </v-btn>
       </form>
     </ValidationObserver>
   </v-container>

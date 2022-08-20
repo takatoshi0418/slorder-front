@@ -1,50 +1,78 @@
 <template>
   <v-app>
-    <v-app-bar app flat clipped-left color="secondary" :class="getAppberClass">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="hidden-md-and-up" />
+    <v-app-bar
+      app
+      flat
+      clipped-left
+      color="secondary"
+      :class="getAppberClass"
+    >
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        class="hidden-md-and-up"
+      />
       <v-toolbar-title class="text-h3 primary--text font-weight-bold">
-        {{$t('common.system_name')}}
+        {{ $t('common.system_name') }}
       </v-toolbar-title>
       <v-spacer />
       <usermenuVue />
     </v-app-bar>
 
     <!-- ナビゲーションメニュー -->
-    <v-navigation-drawer app
+    <v-navigation-drawer
+      app
       v-model="drawer"
       floating
       color="primary"
       clipped
-      :permanent="isPermanent">
+      :permanent="isPermanent"
+    >
       <v-list-item-group
         v-model="group"
         mandatory
-        active-class="secondary">
+        active-class="secondary"
+      >
         <v-list-item 
           v-for="navi of naviMenus"
           :key="navi.index"
           v-slot="{active}"
           @click="moveMenu(navi.name)"
-          class="py-4 ">
+          class="py-4 "
+        >
           <v-list-item-title 
-            :class="active? 'primary--text' : 'secondary--text'">
-            {{navi.label}}
+            :class="active? 'primary--text' : 'secondary--text'"
+          >
+            {{ navi.label }}
           </v-list-item-title>
         </v-list-item>
       </v-list-item-group>
       <v-list-group class="hidden-md-and-up">
-          <template v-slot:activator>
-            <v-list-item-title class="secondary--text">受注太郎</v-list-item-title>
-          </template>
-            <v-list-item class="secondary--text">{{$t('common.logout')}}</v-list-item>
+        <template #activator>
+          <v-list-item-title class="secondary--text">
+            受注太郎
+          </v-list-item-title>
+        </template>
+        <v-list-item class="secondary--text">
+          {{ $t('common.logout') }}
+        </v-list-item>
       </v-list-group>
     </v-navigation-drawer>
 
     <v-main class="secondary">
-      <v-container fluid class="px-5">
-        <router-view />
+      <v-container
+        fluid
+        class="px-5"
+      >
+        <router-view @loading="loading" />
       </v-container>
     </v-main>
+    <v-overlay :value="isLoading">
+      <v-progress-circular
+        :size="70" 
+        indeterminate
+        color="primary"
+      />
+    </v-overlay>
   </v-app>
 </template>
 
@@ -57,7 +85,8 @@ export default {
     return {
       drawer: false,
       naviMenus: this.getMenus(),
-      group: this.getCurrentMenu()
+      group: this.getCurrentMenu(),
+      isLoading: false
     }
   },
   methods: {
@@ -82,6 +111,9 @@ export default {
         {id: 3, name: 'home', label: this.$t('menu.menber')},
         {id: 4, name: 'home', label: this.$t('menu.payment_report')},
       ];
+    },
+    loading: function(isLoading) {
+      this.isLoading = isLoading;
     }
   },
   computed: {
@@ -97,6 +129,11 @@ export default {
   },
   components: {
     usermenuVue
+  },
+  errorCaptured(err) {
+    console.error(err);
+    this.isLoading = false;
+    return false;
   }
 };
 </script>

@@ -1,40 +1,67 @@
 <template>
   <v-container class="primary--text mb-8">
     <v-row>
-      {{$t('common.other_cost')}}
+      {{ $t('common.other_cost') }}
       <v-btn 
         v-if="editable"
         @click="doAddCost()"
-        class="primary secondary--text d-block ml-auto mb-2">
-        {{$t('common.add_new_data')}}
+        class="primary secondary--text d-block ml-auto mb-2"
+      >
+        {{ $t('common.add_new_data') }}
       </v-btn>
     </v-row>
     <v-row>
       <v-col 
         v-if="deleteVisible"
-        class="header" clos="1">{{$t('common.delete')}}</v-col>
-      <v-col class="header" cols="3">{{$t('common.product_name')}}</v-col>
-      <v-col class="header" :cols=editModeCols>{{$t('common.kind')}}</v-col>
-      <v-col class="header" cols="3">{{$t('common.buy_date')}}</v-col>
-      <v-col class="header" cols="3">{{$t('common.price')}}</v-col>
+        class="header"
+        clos="1"
+      >
+        {{ $t('common.delete') }}
+      </v-col>
+      <v-col
+        class="header"
+        cols="3"
+      >
+        {{ $t('common.product_name') }}
+      </v-col>
+      <v-col
+        class="header"
+        :cols="editModeCols"
+      >
+        {{ $t('common.kind') }}
+      </v-col>
+      <v-col
+        class="header"
+        cols="3"
+      >
+        {{ $t('common.buy_date') }}
+      </v-col>
+      <v-col
+        class="header"
+        cols="3"
+      >
+        {{ $t('common.price') }}
+      </v-col>
     </v-row>
     <OtherCostUnit 
-      v-for="(cost,index) of otherCosts" :key="index"
+      v-for="(cost,index) of otherCosts"
+      :key="index"
       :cost="cost"
-      :otherCostKindList="otherCostKindList"
+      :other-cost-kind-list="otherCostKindList"
       :index="index"
       :editable="editable"
       :is-delete-visible="deleteVisible"
       :edit-mode-cols="editModeCols"
-      v-on:update="dataUpdate"
-      v-on:delete="doDeleteCost" />
+      @update="dataUpdate"
+      @delete="doDeleteCost"
+    />
   </v-container>
 </template>
 <script>
   import OtherCostUnit from '@/components/project/OtherCostUnit.vue'
 
   export default {
-    name: 'otherCostInfo',
+    name: 'OtherCostInfo',
     props: {
       otherCosts: {
         required: true

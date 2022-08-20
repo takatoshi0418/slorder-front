@@ -1,38 +1,78 @@
 <template>
   <v-container class="primary--text mb-8">
     <v-row>
-      <v-col cols="1" class="header">{{$t('common.status')}}</v-col>
-      <v-col cols="1" class="column-flex-center">{{status}}</v-col>
+      <v-col
+        cols="1"
+        class="header"
+      >
+        {{ $t('common.status') }}
+      </v-col>
+      <v-col
+        cols="1"
+        class="column-flex-center"
+      >
+        {{ status }}
+      </v-col>
       <v-col cols="10">
         <span v-if="ReceiveVisible">
-          <v-btn @click="doReceive" class="primary secondary--text mx-2">{{$t('common.receive')}}</v-btn>
+          <v-btn
+            @click="doReceive"
+            class="primary secondary--text mx-2"
+          >{{ $t('common.receive') }}</v-btn>
         </span>
         <span v-if="DeliveryVisible">
-          <v-btn @click="doDelivery" class="primary secondary--text mx-2">{{$t('common.delivery')}}</v-btn>
+          <v-btn
+            @click="doDelivery"
+            class="primary secondary--text mx-2"
+          >{{ $t('common.delivery') }}</v-btn>
         </span>
         <span v-if="AcceptanceVisible">
-          <v-btn @click="doAcceptance" class="primary secondary--text mx-2">{{$t('common.acceptance')}}</v-btn>
+          <v-btn
+            @click="doAcceptance"
+            class="primary secondary--text mx-2"
+          >{{ $t('common.acceptance') }}</v-btn>
         </span>
         <span v-if="PeymentedVisible">
-          <v-btn @click="doPeymented" class="primary secondary--text mx-2">{{$t('common.peymented')}}</v-btn>
+          <v-btn
+            @click="doPeymented"
+            class="primary secondary--text mx-2"
+          >{{ $t('common.peymented') }}</v-btn>
         </span>
         <span v-if="LostOrderVisible">
-          <v-btn @click="doLostOrder" class="cancel secondary--text mx-2">{{$t('common.lost_order')}}</v-btn>
+          <v-btn
+            @click="doLostOrder"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.lost_order') }}</v-btn>
         </span>
         <span v-if="ReceiveCancelVisible">
-          <v-btn @click="doReceiveCancel" class="cancel secondary--text mx-2">{{$t('common.receive_cancel')}}</v-btn>
+          <v-btn
+            @click="doReceiveCancel"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.receive_cancel') }}</v-btn>
         </span>
         <span v-if="DeliveryCancelVisible">
-          <v-btn @click="doDeliveryCancel" class="cancel secondary--text mx-2">{{$t('common.delivery_cancel')}}</v-btn>
+          <v-btn
+            @click="doDeliveryCancel"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.delivery_cancel') }}</v-btn>
         </span>
         <span v-if="AcceptanceCancelVisible">
-          <v-btn @click="doAcceptanceCancel" class="cancel secondary--text mx-2">{{$t('common.acceptance_cancel')}}</v-btn>
+          <v-btn
+            @click="doAcceptanceCancel"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.acceptance_cancel') }}</v-btn>
         </span>
         <span v-if="PeymentedCancelVisible">
-          <v-btn @click="doPeymentedCancel" class="cancel secondary--text mx-2">{{$t('common.peymented_cancel')}}</v-btn>
+          <v-btn
+            @click="doPeymentedCancel"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.peymented_cancel') }}</v-btn>
         </span>
         <span v-if="LostOrderCancelVisible">
-          <v-btn @click="doLostOrderCancel" class="cancel secondary--text mx-2">{{$t('common.lost_order_cancel')}}</v-btn>
+          <v-btn
+            @click="doLostOrderCancel"
+            class="cancel secondary--text mx-2"
+          >{{ $t('common.lost_order_cancel') }}</v-btn>
         </span>
       </v-col>
     </v-row>
@@ -40,7 +80,7 @@
 </template>
 <script>
   export default {
-    name: 'statusInfo',
+    name: 'StatusInfo',
     props: {
       value: {
         required: true

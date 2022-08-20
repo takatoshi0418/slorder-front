@@ -12,65 +12,85 @@
       :do-delivery-cancel="doDeliveryCancel"
       :do-acceptance-cancel="doAcceptanceCancel"
       :do-peymented-cancel="doPeymentedCancel"
-      :do-lost-order-cancel="doLostOrderCancel" />
+      :do-lost-order-cancel="doLostOrderCancel"
+    />
 
     <!-- basicInfo -->
     <BasicInfo 
-      :basicInfo="project.basic"
-      :editable=editable
-      v-on:update="dataUpdate" />
+      :basic-info="project.basic"
+      :editable="editable"
+      @update="dataUpdate"
+    />
 
     <!-- peyment -->
     <PaymentInfo 
       :payment="project.payment"
       :editable="editable"
-      v-on:update="dataUpdate" />
+      @update="dataUpdate"
+    />
 
     <!-- assign_menber -->
     <AssignMemberInfo
       :members="project.members"
-      :editable=editable
+      :editable="editable"
       :do-operating-register="doOperatingRegister"
-      v-on:update="arrayDataUpdate"
-      v-on:add="addArray"
-      v-on:delete="deleteArray" />
+      @update="arrayDataUpdate"
+      @add="addArray"
+      @delete="deleteArray"
+    />
 
     <!-- onther_cost -->
     <OtherCostInfo 
-      :otherCosts="project.otherCosts"
-      v-on:update="arrayDataUpdate"
-      :editable=editable
-      v-on:add="addArray"
-      v-on:delete="deleteArray" />
+      :other-costs="project.otherCosts"
+      @update="arrayDataUpdate"
+      :editable="editable"
+      @add="addArray"
+      @delete="deleteArray"
+    />
 
     <!-- edit button -->
     <v-container 
       v-if="isViewMode"
-      class="primary--text mb-8">
+      class="primary--text mb-8"
+    >
       <v-btn 
         class="primary secondary--text d-block mx-auto"
-        @click="doEdit">{{$t('common.edit')}}</v-btn>
+        @click="doEdit"
+      >
+        {{ $t('common.edit') }}
+      </v-btn>
       <v-btn 
         v-if="isEditMode"
         class="primary secondary--text d-block mx-auto"
-        @click="doSave">{{$t('common.save')}}</v-btn>
+        @click="doSave"
+      >
+        {{ $t('common.save') }}
+      </v-btn>
     </v-container>
     <!-- register cancel button -->
     <v-container 
       v-if="isEditMode"
-      class="primary--text mb-8 d-flex justify-center">
+      class="primary--text mb-8 d-flex justify-center"
+    >
       <v-btn 
         class="primary secondary--text mx-4"
-        @click="doRegister">{{$t('common.register')}}</v-btn>
+        @click="doRegister"
+      >
+        {{ $t('common.register') }}
+      </v-btn>
       <v-btn 
         class="cancel secondary--text mx-4"
-        @click="doCancel">{{$t('common.cancel')}}</v-btn>
+        @click="doCancel"
+      >
+        {{ $t('common.cancel') }}
+      </v-btn>
     </v-container>
       
     <!-- update_history -->
     <UpdateHistoryInfo 
       v-if="isViewMode"
-      :histories="project.histories" />
+      :histories="project.histories"
+    />
   </v-container>
 </template>
 <script>

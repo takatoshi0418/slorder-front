@@ -1,63 +1,117 @@
 <template>
   <v-container class="primary--text mb-8">
-    <v-row>{{$t('common.basic_info')}}</v-row>
+    <v-row>{{ $t('common.basic_info') }}</v-row>
     <v-row v-if="!editable">
-      <v-col class="side_header" cols="4">{{$t('common.project_no')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.project_no') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <TextField 
           v-model="projectNo"
           :label="$t('common.project_no')"
-          :max-value=16 />
+          :max-value="16"
+        />
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="side_header" cols="4">{{$t('common.project_name')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.project_name') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <TextField 
           v-model="projectName"
           :label="$t('common.project_name')"
-          :max-value=16
-          :editable=editable />
+          :max-value="16"
+          :editable="editable"
+        />
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="side_header" cols="4">{{$t('common.client_name')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.client_name') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <SelectField
           v-model="client"
           :label="$t('common.client_name')"
           :items="clientList"
           item-value="id"
-          itemText="name"
-          :editable=editable />
+          item-text="name"
+          :editable="editable"
+        />
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="side_header" cols="4">{{$t('common.project_start_date')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.project_start_date') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <DateField 
           v-model="startDate"
           :label="$t('common.project_start_date')"
-          :editable=editable />
+          :editable="editable"
+        />
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="side_header" cols="4">{{$t('common.project_limit_date')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.project_limit_date') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <DateField 
           v-model="limitDate"
           :label="$t('common.project_limit_date')"
-          :editable=editable />
+          :editable="editable"
+        />
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="side_header" cols="4">{{$t('common.project_receive_amount')}}</v-col>
-      <v-col class="column" cols="8">
+      <v-col
+        class="side_header"
+        cols="4"
+      >
+        {{ $t('common.project_receive_amount') }}
+      </v-col>
+      <v-col
+        class="column"
+        cols="8"
+      >
         <NumberField 
           v-model="receiveAmount"
           :label="$t('common.project_receive_amount')"
           :unit="$t('common.currency')"
-          :editable=editable />
+          :editable="editable"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -68,7 +122,7 @@
   import SelectField from '@/components/Interface/SelectField.vue'
   import NumberField from '@/components/Interface/NumberField.vue'
   export default {
-    name: 'basicInfo',
+    name: 'BasicInfo',
     components: {
       TextField,
       DateField,

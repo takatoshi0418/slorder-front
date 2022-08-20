@@ -2,23 +2,54 @@
   <v-container>
     <v-container class="primary--text mb-8">
       <v-row>
-        <v-col class="side_header" cols="4">{{$t('common.project_no')}}</v-col>
-        <v-col class="column" cols="8">{{project.no}}</v-col>
+        <v-col
+          class="side_header"
+          cols="4"
+        >
+          {{ $t('common.project_no') }}
+        </v-col>
+        <v-col
+          class="column"
+          cols="8"
+        >
+          {{ project.no }}
+        </v-col>
       </v-row>
       <v-row>
-        <v-col class="side_header" cols="4">{{$t('common.project_name')}}</v-col>
-        <v-col class="column" cols="8">{{project.name}}</v-col>
+        <v-col
+          class="side_header"
+          cols="4"
+        >
+          {{ $t('common.project_name') }}
+        </v-col>
+        <v-col
+          class="column"
+          cols="8"
+        >
+          {{ project.name }}
+        </v-col>
       </v-row>
       <v-row>
-        <v-col class="side_header" cols="4">{{$t('common.client_name')}}</v-col>
-        <v-col class="column" cols="8">{{project.client}}</v-col>
+        <v-col
+          class="side_header"
+          cols="4"
+        >
+          {{ $t('common.client_name') }}
+        </v-col>
+        <v-col
+          class="column"
+          cols="8"
+        >
+          {{ project.client }}
+        </v-col>
       </v-row>
     </v-container>
     <v-container class="primary--text mb-8 d-flex justify-center">
       <v-btn 
         @click="preDay"
-        class="primary secondary--text mx-4">
-        {{$t('common.previous_day')}}
+        class="primary secondary--text mx-4"
+      >
+        {{ $t('common.previous_day') }}
       </v-btn>
       <DateField 
         class="input-centering"
@@ -26,27 +57,51 @@
         :label="$t('common.date')"
         :editable="true"
         :solo="true"
-        :centering=true />
+        :centering="true"
+      />
       <v-btn 
         @click="nextDay"
-        class="primary secondary--text mx-4">
-        {{$t('common.next_day')}}
+        class="primary secondary--text mx-4"
+      >
+        {{ $t('common.next_day') }}
       </v-btn>
     </v-container>
     <v-container class="primary--text mb-8">
-      <v-row>{{$t('common.assign_menber')}}</v-row>
+      <v-row>{{ $t('common.assign_menber') }}</v-row>
       <v-row>
-        <v-col class="header" cols="8">{{$t('common.member_name')}}</v-col>
-        <v-col class="header" cols="4">{{$t('common.oparating_time')}}</v-col>
+        <v-col
+          class="header"
+          cols="8"
+        >
+          {{ $t('common.member_name') }}
+        </v-col>
+        <v-col
+          class="header"
+          cols="4"
+        >
+          {{ $t('common.oparating_time') }}
+        </v-col>
       </v-row>
-      <v-row v-for="member of project.memberList" :key="member.index">
-        <v-col class="column" cols="8">{{member.name}}</v-col>
-        <v-col class="column" cols="4">
+      <v-row
+        v-for="member of project.memberList"
+        :key="member.index"
+      >
+        <v-col
+          class="column"
+          cols="8"
+        >
+          {{ member.name }}
+        </v-col>
+        <v-col
+          class="column"
+          cols="4"
+        >
           <TimeField 
             v-model="member.oparatingTime"
             :label="$t('common.oparating_time')"
             editable
-            solo />
+            solo
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -57,7 +112,7 @@
   import DateField from '@/components/Interface/DateField.vue'
   import TimeField from '@/components/Interface/TimeField.vue'
   export default {
-    name: "orderWorkingRegisterView",
+    name: "OrderWorkingRegisterView",
     data: function () {
         return {
           date: dateUtil.nowDateStr(),

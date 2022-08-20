@@ -3,41 +3,45 @@
     <v-menu
       ref="timePicker"
       v-model="timePicker"
-      :close-on-content-click=false
+      :close-on-content-click="false"
       :return-value.sync="selectTime"
       min-width="auto"
-      offset-y>
-      <template v-slot:activator="{ on, attrs }">
+      offset-y
+    >
+      <template #activator="{ on, attrs }">
         <ValidationProvider 
           :rules="rule"
           v-slot="{errors}" 
-          :name="label">
+          :name="label"
+        >
           <v-text-field
             v-model="timeValue"
             :error-messages="errors"
             dense
             readonly
-            :solo=solo
+            :solo="solo"
             v-bind="attrs"
-            v-on="on" />
+            v-on="on"
+          />
         </ValidationProvider>
       </template>
       <v-time-picker
         v-model="selectTime"
         @click:minute="$refs.timePicker.save(selectTime)
-        timePicker = false"
+                       timePicker = false"
         format="24hr"
-        scrollable />
+        scrollable
+      />
     </v-menu>
   </span>
   <span v-else-if="isEditableElse()">
-    {{value}}
+    {{ value }}
   </span>
 </template>
 <script>
 
 export default {
-  name: 'timeField',
+  name: 'TimeField',
   props: {
     value: {
       required: true

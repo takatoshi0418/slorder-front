@@ -1,49 +1,73 @@
 <template>
   <v-container class="primary--text mb-8">
     <v-row>
-      {{$t('common.assign_menber')}}
+      {{ $t('common.assign_menber') }}
       <v-btn 
         v-if="viewMode"
         @click="doOperatingRegister"
-        class="primary secondary--text d-block ml-auto mb-2">
-        {{$t('common.oparating_register')}}
+        class="primary secondary--text d-block ml-auto mb-2"
+      >
+        {{ $t('common.oparating_register') }}
       </v-btn>
       <v-btn 
         v-if="editMode"
         @click="doAddMember()"
-        class="primary secondary--text d-block ml-auto mb-2">
-        {{$t('common.adding_member')}}
+        class="primary secondary--text d-block ml-auto mb-2"
+      >
+        {{ $t('common.adding_member') }}
       </v-btn>
     </v-row>
     <v-row>
-      <v-col v-if="deassignmentVisible"
-        class="header" :cols="2">{{$t('common.deassignment')}}</v-col>
-      <v-col class="header" :cols="clos">{{$t('common.member_name')}}</v-col>
-      <v-col class="header" :cols="clos">{{$t('common.unit_cost')}}</v-col>
-      <v-col v-if="oparatingTimeVisible"
-        class="header" cols="4">{{$t('common.oparating_time')}}</v-col>
+      <v-col
+        v-if="deassignmentVisible"
+        class="header"
+        :cols="2"
+      >
+        {{ $t('common.deassignment') }}
+      </v-col>
+      <v-col
+        class="header"
+        :cols="clos"
+      >
+        {{ $t('common.member_name') }}
+      </v-col>
+      <v-col
+        class="header"
+        :cols="clos"
+      >
+        {{ $t('common.unit_cost') }}
+      </v-col>
+      <v-col
+        v-if="oparatingTimeVisible"
+        class="header"
+        cols="4"
+      >
+        {{ $t('common.oparating_time') }}
+      </v-col>
     </v-row>
     <AssignMemberUnit 
-      v-for="(member, index) of members" :key="index"
+      v-for="(member, index) of members"
+      :key="index"
       :member="member"
       :index="index"
-      :memberList="memberList"
+      :member-list="memberList"
       :get-dynamic-cols="clos"
-      :editable=editable
+      :editable="editable"
       :is-oparating-time-visible="oparatingTimeVisible"
       :is-deassignment-visible="deassignmentVisible"
-      v-on:update="dataUpdate"
-      v-on:lifting="doLiftingMember" />
-      <v-row v-if="error.exists">
-        <span class="error--text">{{error.message}}</span>
-      </v-row>
+      @update="dataUpdate"
+      @lifting="doLiftingMember"
+    />
+    <v-row v-if="error.exists">
+      <span class="error--text">{{ error.message }}</span>
+    </v-row>
   </v-container>
 </template>
 <script>
   import AssignMemberUnit from '@/components/project/AssignMemberUnit.vue'
 
   export default {
-    name: "assignMenberInfo",
+    name: "AssignMenberInfo",
     data: function() {
       return {
         error: {

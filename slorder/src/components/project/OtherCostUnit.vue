@@ -2,42 +2,61 @@
   <v-row>
     <v-col 
       v-if="isDeleteVisible"
-      class="column-flex-center" cols="1" >
+      class="column-flex-center"
+      cols="1"
+    >
       <v-btn 
         class="cancel secondary--text"
-        @click="doDeleteCost()" >
-        {{$t('common.delete')}}
+        @click="doDeleteCost()"
+      >
+        {{ $t('common.delete') }}
       </v-btn>
     </v-col>
-    <v-col class="column" cols="3" >
+    <v-col
+      class="column"
+      cols="3"
+    >
       <TextField 
         v-model="costName"
         :label="$t('common.product_name')"
-        :max-value=16
-        :editable=editable />
+        :max-value="16"
+        :editable="editable"
+      />
     </v-col>
-    <v-col class="column-center" :cols=editModeCols>
+    <v-col
+      class="column-center"
+      :cols="editModeCols"
+    >
       <SelectField
         v-model="costKind"
         :label="$t('common.kind')"
         :items="otherCostKindList"
         item-value="id"
-        itemText="name"
-        :editable=editable />
+        item-text="name"
+        :editable="editable"
+      />
     </v-col>
-    <v-col class="column-center" cols="3">
+    <v-col
+      class="column-center"
+      cols="3"
+    >
       <DateField 
         v-model="buyDate"
         :label="$t('common.buy_date')"
-        :editable=editable
-        :centering=true />
+        :editable="editable"
+        :centering="true"
+      />
     </v-col>
-    <v-col class="column-right" cols="3">
+    <v-col
+      class="column-right"
+      cols="3"
+    >
       <NumberField 
         v-model="price"
         :label="$t('common.price')"
         :unit="$t('common.currency')"
-        :editable=editable />
+        :editable="editable"
+      />
     </v-col>
   </v-row>
 </template>
@@ -48,7 +67,7 @@
   import NumberField from '@/components/Interface/NumberField.vue'
 
   export default {
-    name: 'otherCostUnit',
+    name: 'OtherCostUnit',
     components: {
       TextField,
       DateField,

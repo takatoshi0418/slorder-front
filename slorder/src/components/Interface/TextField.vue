@@ -3,20 +3,22 @@
     <ValidationProvider 
       :rules="rule"
       v-slot="{errors}" 
-      :name="label">
+      :name="label"
+    >
       <v-text-field
         v-model="textValue"
         :error-messages="errors"
-        dense />
+        dense
+      />
     </ValidationProvider>
   </span>
   <span v-else-if="isEditableElse()">
-    {{value}}
+    {{ value }}
   </span>
 </template>
 <script>
 export default {
-  name: 'textField',
+  name: 'TextField',
   props: {
     value: {
       required: true

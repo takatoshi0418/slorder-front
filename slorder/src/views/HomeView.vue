@@ -1,17 +1,25 @@
 <template>
   <v-container>
     <h1>HomeView</h1>
-    <div v-for="time of times" :key="time.index">
+    <div
+      v-for="time of times"
+      :key="time.index"
+    >
       <TimeField 
         v-model="time.value"
         label="aaaa"
-        editable />
+        editable
+      />
     </div>
-    <div v-for="time of time2s" :key="time.index">
+    <div
+      v-for="time of time2s"
+      :key="time.index"
+    >
       <TimeField 
         v-model="time.value"
         label="aaaa"
-        editable />
+        editable
+      />
     </div>
   </v-container>
 </template>

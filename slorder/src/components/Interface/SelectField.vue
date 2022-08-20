@@ -3,7 +3,8 @@
     <ValidationProvider 
       :rules="rule"
       v-slot="{errors}" 
-      :name="label">
+      :name="label"
+    >
       <v-select 
         v-model="selectValue"
         :items="items"
@@ -11,16 +12,17 @@
         :item-value="itemValue"
         :error-messages="errors"
         :return-object="returnObject"
-        dense />
+        dense
+      />
     </ValidationProvider>
   </span>
   <span v-else-if="isEditableElse()">
-    {{displayValue}}
+    {{ displayValue }}
   </span>
 </template>
 <script>
 export default {
-  name: 'selectField',
+  name: 'SelectField',
   props: {
     value: {
       required: true

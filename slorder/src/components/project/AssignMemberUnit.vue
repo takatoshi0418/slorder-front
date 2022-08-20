@@ -2,37 +2,51 @@
   <v-row>
     <v-col 
       v-if="isDeassignmentVisible"
-      class="column-flex-center" cols="2" >
+      class="column-flex-center"
+      cols="2"
+    >
       <v-btn 
         class="cancel secondary--text"
-        @click="doLifting()" >
-        {{$t('common.lifting')}}
+        @click="doLifting()"
+      >
+        {{ $t('common.lifting') }}
       </v-btn>
     </v-col>
-    <v-col class="column" :cols="getDynamicCols" >
+    <v-col
+      class="column"
+      :cols="getDynamicCols"
+    >
       <SelectField
         v-model="memberValue"
         :label="$t('common.member_name')"
         :items="memberList"
-        itemText="name"
-        itemValue="no"
-        :editable=editable />
+        item-text="name"
+        item-value="no"
+        :editable="editable"
+      />
     </v-col>
-    <v-col class="column-right-flex-center" :cols="getDynamicCols" >
+    <v-col
+      class="column-right-flex-center"
+      :cols="getDynamicCols"
+    >
       <NumberField
         :value="unitCost"
         :label="$t('common.unit_cost')"
         unit="/h"
-        :notSpace=true />
+        :not-space="true"
+      />
     </v-col>
     <v-col 
       v-if="isOparatingTimeVisible"
-      class="column-right" cols="4" >
+      class="column-right"
+      cols="4"
+    >
       <NumberField
         :value="oparatingTime"
         :label="$t('common.oparating_time')"
-        :float=true
-        unit="時間" />
+        :float="true"
+        unit="時間"
+      />
     </v-col>
   </v-row>
 </template>
@@ -41,7 +55,7 @@ import SelectField from '@/components/Interface/SelectField.vue';
 import NumberField from '@/components/Interface/NumberField.vue';
 
   export default {
-    name: 'assignMenberInfo',
+    name: 'AssignMenberInfo',
     components: {
     SelectField,
     NumberField

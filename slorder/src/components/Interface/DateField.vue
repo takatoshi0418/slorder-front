@@ -3,41 +3,45 @@
     <v-menu
       ref="datePicker"
       v-model="datePicker"
-      :close-on-content-click=false
+      :close-on-content-click="false"
       :return-value.sync="selectDate"
       min-width="auto"
-      offset-y>
-      <template v-slot:activator="{ on, attrs }">
+      offset-y
+    >
+      <template #activator="{ on, attrs }">
         <ValidationProvider 
           :rules="rule"
           v-slot="{errors}" 
-          :name="label">
+          :name="label"
+        >
           <v-text-field
             :class="centeringCss"
             v-model="dateValue"
             :error-messages="errors"
             dense
             readonly
-            :solo=solo
+            :solo="solo"
             v-bind="attrs"
-            v-on="on" />
+            v-on="on"
+          />
         </ValidationProvider>
       </template>
       <v-date-picker
         locale="jp-ja"
         v-model="selectDate"
         @input="$refs.datePicker.save(selectDate)
-        menu = false" />
+                menu = false"
+      />
     </v-menu>
   </span>
   <span v-else-if="isEditableElse()">
-    {{value}}
+    {{ value }}
   </span>
 </template>
 <script>
 
 export default {
-  name: 'dateField',
+  name: 'DateField',
   props: {
     value: {
       required: true
