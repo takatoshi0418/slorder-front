@@ -32,11 +32,11 @@
             class="primary secondary--text mx-2"
           >{{ $t('common.acceptance') }}</v-btn>
         </span>
-        <span v-if="PeymentedVisible">
+        <span v-if="paymentedVisible">
           <v-btn
-            @click="doPeymented"
+            @click="doPaymented"
             class="primary secondary--text mx-2"
-          >{{ $t('common.peymented') }}</v-btn>
+          >{{ $t('common.paymented') }}</v-btn>
         </span>
         <span v-if="LostOrderVisible">
           <v-btn
@@ -62,11 +62,11 @@
             class="cancel secondary--text mx-2"
           >{{ $t('common.acceptance_cancel') }}</v-btn>
         </span>
-        <span v-if="PeymentedCancelVisible">
+        <span v-if="paymentedCancelVisible">
           <v-btn
-            @click="doPeymentedCancel"
+            @click="doPaymentedCancel"
             class="cancel secondary--text mx-2"
-          >{{ $t('common.peymented_cancel') }}</v-btn>
+          >{{ $t('common.paymented_cancel') }}</v-btn>
         </span>
         <span v-if="LostOrderCancelVisible">
           <v-btn
@@ -97,7 +97,7 @@
         type: Function,
         required: true
       },
-      doPeymented: {
+      doPaymented: {
         type: Function,
         required: true
       },
@@ -117,7 +117,7 @@
         type: Function,
         required: true
       },
-      doPeymentedCancel: {
+      doPaymentedCancel: {
         type: Function,
         required: true
       },
@@ -144,7 +144,7 @@
       AcceptanceVisible: function() {
         return this.$getProjectStatus('delivered').id === this.value
       },
-      PeymentedVisible: function() {
+      paymentedVisible: function() {
         return this.$getProjectStatus('acceptanced').id === this.value
       },
       LostOrderVisible: function() {
@@ -160,7 +160,7 @@
       AcceptanceCancelVisible: function() {
         return this.$getProjectStatus('acceptanced').id === this.value
       },
-      PeymentedCancelVisible: function() {
+      paymentedCancelVisible: function() {
         return this.$getProjectStatus('paymented').id === this.value
       },
       LostOrderCancelVisible: function() {

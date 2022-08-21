@@ -6,12 +6,12 @@
       :do-receive="doReceive"
       :do-delivery="doDelivery"
       :do-acceptance="doAcceptance"
-      :do-peymented="doPeymented"
+      :do-paymented="doPaymented"
       :do-lost-order="doLostOrder"
       :do-receive-cancel="doReceiveCancel"
       :do-delivery-cancel="doDeliveryCancel"
       :do-acceptance-cancel="doAcceptanceCancel"
-      :do-peymented-cancel="doPeymentedCancel"
+      :do-paymented-cancel="doPaymentedCancel"
       :do-lost-order-cancel="doLostOrderCancel"
     />
 
@@ -22,7 +22,7 @@
       @update="dataUpdate"
     />
 
-    <!-- peyment -->
+    <!-- payment -->
     <PaymentInfo 
       :payment="project.payment"
       :basic="project.basic"
@@ -32,7 +32,7 @@
       @update="dataUpdate"
     />
 
-    <!-- assign_menber -->
+    <!-- assign_member -->
     <AssignMemberInfo
       :members="project.members"
       :editable="editable"
@@ -42,7 +42,7 @@
       @delete="deleteArray"
     />
 
-    <!-- onther_cost -->
+    <!-- other_cost -->
     <OtherCostInfo 
       :other-costs="project.otherCosts"
       @update="arrayDataUpdate"
@@ -128,20 +128,20 @@
             receiveAmount: 20000000
           },
           payment: {
-            // oparatingWorkByTime: 10.00,
-            oparatingWorkByTime: null,
-            // oparatingCost: 8640000,
-            oparatingCost: null,
+            // operatingWorkByTime: 10.00,
+            operatingWorkByTime: null,
+            // operatingCost: 8640000,
+            operatingCost: null,
             // otherCost: 5400000,
             otherCost: null,
             // proceeds: 5496000
             proceeds: null
           },
           members: [
-            {value: 1, unit: 2500, oparatingTime: 150.00},
-            {value: 2, unit: 4000, oparatingTime: 90.00},
-            {value: 3, unit: 3500, oparatingTime: 100.01},
-            {value: 4, unit: 3500, oparatingTime: 120.40}
+            {value: 1, unit: 2500, operatingTime: 150.00},
+            {value: 2, unit: 4000, operatingTime: 90.00},
+            {value: 3, unit: 3500, operatingTime: 100.01},
+            {value: 4, unit: 3500, operatingTime: 120.40}
           ],
           otherCosts: [
             {
@@ -202,7 +202,7 @@
       doAcceptance: function() {
 
       },
-      doPeymented: function() {
+      doPaymented: function() {
 
       },
       doLostOrder: function() {
@@ -217,7 +217,7 @@
       doAcceptanceCancel: function() {
 
       },
-      doPeymentedCancel: function() {
+      doPaymentedCancel: function() {
 
       },
       doLostOrderCancel: function() {

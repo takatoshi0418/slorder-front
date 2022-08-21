@@ -67,7 +67,7 @@
       </v-btn>
     </v-container>
     <v-container class="primary--text mb-8">
-      <v-row>{{ $t('common.assign_menber') }}</v-row>
+      <v-row>{{ $t('common.assign_member') }}</v-row>
       <v-row>
         <v-col
           class="header"
@@ -79,7 +79,7 @@
           class="header"
           cols="4"
         >
-          {{ $t('common.oparating_time') }}
+          {{ $t('common.operating_time') }}
         </v-col>
       </v-row>
       <v-row
@@ -97,8 +97,8 @@
           cols="4"
         >
           <TimeField 
-            v-model="member.oparatingTime"
-            :label="$t('common.oparating_time')"
+            v-model="member.operatingTime"
+            :label="$t('common.operating_time')"
             editable
             solo
           />
@@ -122,10 +122,10 @@
             name: 'ペット行動管理システム',
             client: "ポメラニアン佐藤",
             memberList: [
-              {name: '浅井 長政', oparatingTime: '08:01'},
-              {name: '織田 信長', oparatingTime: '08:01'},
-              {name: '徳川 家康', oparatingTime: '08:01'},
-              {name: '豊臣 秀吉', oparatingTime: '08:01'}
+              {name: '浅井 長政', operatingTime: '08:01'},
+              {name: '織田 信長', operatingTime: '08:01'},
+              {name: '徳川 家康', operatingTime: '08:01'},
+              {name: '豊臣 秀吉', operatingTime: '08:01'}
             ]
           }
       };
@@ -144,10 +144,10 @@
       date: {
         handler: function() {
           this.project.memberList = [
-            {name: '浅井 長政', oparatingTime: '08:01'},
-            {name: '織田 信長', oparatingTime: '08:01'},
-            {name: '徳川 家康', oparatingTime: '08:01'},
-            {name: '豊臣 秀吉', oparatingTime: '08:01'}
+            {name: '浅井 長政', operatingTime: '08:01'},
+            {name: '織田 信長', operatingTime: '08:01'},
+            {name: '徳川 家康', operatingTime: '08:01'},
+            {name: '豊臣 秀吉', operatingTime: '08:01'}
           ]
         }
       }

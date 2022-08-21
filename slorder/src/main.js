@@ -47,7 +47,7 @@ Vue.prototype.$projectHistoryKinds = [
   {id: 1, label: i18n.tc('common.receive')},
   {id: 2, label: i18n.tc('common.delivery')},
   {id: 3, label: i18n.tc('common.acceptance')},
-  {id: 4, label: i18n.tc('common.peymented')},
+  {id: 4, label: i18n.tc('common.paymented')},
   {id: 5, label: i18n.tc('common.lost_order')},
   {id: 6, label: i18n.tc('common.receive_cancel')},
   {id: 7, label: i18n.tc('common.delivery_cancel')},

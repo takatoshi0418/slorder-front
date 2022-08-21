@@ -37,13 +37,13 @@
       />
     </v-col>
     <v-col 
-      v-if="isOparatingTimeVisible"
+      v-if="isOperatingTimeVisible"
       class="column-right"
       cols="4"
     >
       <NumberField
-        :value="oparatingTime"
-        :label="$t('common.oparating_time')"
+        :value="operatingTime"
+        :label="$t('common.operating_time')"
         :float="true"
         unit="時間"
       />
@@ -55,7 +55,7 @@ import SelectField from '@/components/Interface/SelectField.vue';
 import NumberField from '@/components/Interface/NumberField.vue';
 
   export default {
-    name: 'AssignMenberInfo',
+    name: 'AssignmemberInfo',
     components: {
     SelectField,
     NumberField
@@ -79,7 +79,7 @@ import NumberField from '@/components/Interface/NumberField.vue';
         type: Number,
         required: true
       },
-      isOparatingTimeVisible: {
+      isOperatingTimeVisible: {
         type: Boolean,
         required: true
       },
@@ -106,10 +106,10 @@ import NumberField from '@/components/Interface/NumberField.vue';
           return this.getUnitCost(this.member.value);
         }
       },
-      oparatingTime: {
+      operatingTime: {
         get () {
-          if (this.member.oparatingTime !== undefined || this.member.oparatingTime !== 0){
-            return this.member.oparatingTime;
+          if (this.member.operatingTime !== undefined || this.member.operatingTime !== 0){
+            return this.member.operatingTime;
           }
           return 0;
         }

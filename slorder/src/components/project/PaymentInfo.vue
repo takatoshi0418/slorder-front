@@ -1,6 +1,6 @@
 <template>
   <v-container class="primary--text mb-8">
-    <v-row>{{ $t('common.peyment') }}</v-row>
+    <v-row>{{ $t('common.payment') }}</v-row>
     <v-row>
       <v-col
         class="header"
@@ -25,15 +25,15 @@
         class="side_header"
         cols="2"
       >
-        {{ $t('common.oparating_work_by_time') }}
+        {{ $t('common.operating_work_by_time') }}
       </v-col>
       <v-col
         class="column-left"
         cols="getCols"
       >
         <NumberField 
-          v-model="estimateOparatingWorkByTime"
-          :label="$t('common.oparating_work_by_time')"
+          v-model="estimateoperatingWorkByTime"
+          :label="$t('common.operating_work_by_time')"
           :unit="$t('common.working_man_hours_unit')"
           :float="true"
           :editable="editable"
@@ -45,8 +45,8 @@
         cols="5"
       >
         <NumberField 
-          v-model="actualOparatingWorkByTime"
-          :label="$t('common.oparating_work_by_time')"
+          v-model="actualoperatingWorkByTime"
+          :label="$t('common.operating_work_by_time')"
           :unit="$t('common.working_man_hours_unit')"
           :float="true"
         />
@@ -57,15 +57,15 @@
         class="side_header"
         cols="2"
       >
-        {{ $t('common.oparating_cost') }}
+        {{ $t('common.operating_cost') }}
       </v-col>
       <v-col
         class="column-left"
         cols="getCols"
       >
         <NumberField 
-          v-model="estimateOparatingCost"
-          :label="$t('common.oparating_cost')"
+          v-model="estimateoperatingCost"
+          :label="$t('common.operating_cost')"
           :unit="$t('common.currency')"
         />
       </v-col>
@@ -75,8 +75,8 @@
         cols="5"
       >
         <NumberField 
-          v-model="actualOparatingCost"
-          :label="$t('common.oparating_cost')"
+          v-model="actualoperatingCost"
+          :label="$t('common.operating_cost')"
           :unit="$t('common.currency')"
         />
       </v-col>
@@ -173,9 +173,9 @@
       }
     },
     computed: {
-      estimateOparatingWorkByTime: {
+      estimateoperatingWorkByTime: {
         get () {
-          let db = this.payment.oparatingWorkByTime;
+          let db = this.payment.operatingWorkByTime;
           if (db !== null) {
             return db;
           }
@@ -190,12 +190,12 @@
           return Number.parseFloat(time / 24 / 30 * this.members.length).toFixed(2)
         },
         set (value) {
-          this.$emit('update', this.payment.estimate, 'oparatingWorkByTime', value);
+          this.$emit('update', this.payment.estimate, 'operatingWorkByTime', value);
         }
       },
-      estimateOparatingCost: {
+      estimateoperatingCost: {
         get () {
-          let db = this.payment.oparatingCost;
+          let db = this.payment.operatingCost;
           if (db !== null) {
             return db;
           }
@@ -237,24 +237,24 @@
           if (!sales) {
             sales = 0;
           }
-          return sales - (this.estimateOparatingCost + this.estimateOtherCost);
+          return sales - (this.estimateoperatingCost + this.estimateOtherCost);
         }
       },
-      actualOparatingWorkByTime: {
+      actualoperatingWorkByTime: {
         get () {
           let workTime = Number(0);
           for (let member of this.members) {
-            workTime = workTime + Number.parseFloat((member.oparatingTime/(8*20)))
+            workTime = workTime + Number.parseFloat((member.operatingTime/(8*20)))
           }
           console.log(workTime)
           return workTime.toFixed(2);
         }
       },
-      actualOparatingCost: {
+      actualoperatingCost: {
         get () {
           let cost = 0;
           for (let member of this.members) {
-            cost = cost + (member.oparatingTime * member.unit);
+            cost = cost + (member.operatingTime * member.unit);
           }
           return cost;
         }
@@ -274,7 +274,7 @@
           if (!sales) {
             sales = 0;
           }
-          return sales - (this.actualOparatingCost + this.actualOtherCost);
+          return sales - (this.actualoperatingCost + this.actualOtherCost);
         }
       },
       getCols: function() {

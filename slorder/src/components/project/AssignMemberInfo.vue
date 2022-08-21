@@ -1,13 +1,13 @@
 <template>
   <v-container class="primary--text mb-8">
     <v-row>
-      {{ $t('common.assign_menber') }}
+      {{ $t('common.assign_member') }}
       <v-btn 
         v-if="viewMode"
         @click="doOperatingRegister"
         class="primary secondary--text d-block ml-auto mb-2"
       >
-        {{ $t('common.oparating_register') }}
+        {{ $t('common.operating_register') }}
       </v-btn>
       <v-btn 
         v-if="editMode"
@@ -38,11 +38,11 @@
         {{ $t('common.unit_cost') }}
       </v-col>
       <v-col
-        v-if="oparatingTimeVisible"
+        v-if="operatingTimeVisible"
         class="header"
         cols="4"
       >
-        {{ $t('common.oparating_time') }}
+        {{ $t('common.operating_time') }}
       </v-col>
     </v-row>
     <AssignMemberUnit 
@@ -53,7 +53,7 @@
       :member-list="memberList"
       :get-dynamic-cols="clos"
       :editable="editable"
-      :is-oparating-time-visible="oparatingTimeVisible"
+      :is-operating-time-visible="operatingTimeVisible"
       :is-deassignment-visible="deassignmentVisible"
       @update="dataUpdate"
       @lifting="doLiftingMember"
@@ -67,7 +67,7 @@
   import AssignMemberUnit from '@/components/project/AssignMemberUnit.vue'
 
   export default {
-    name: "AssignMenberInfo",
+    name: "AssignMemberInfo",
     data: function() {
       return {
         error: {
@@ -102,7 +102,7 @@
       clos: function() {
         return this.editable? 5: 4;
       },
-      oparatingTimeVisible: function() {
+      operatingTimeVisible: function() {
         return !this.editable;
       },
       deassignmentVisible: function() {
@@ -126,7 +126,7 @@
         let data = {
           value: null,
           unit: 0,
-          oparatingTime: 0
+          operatingTime: 0
         }
         this.$emit('add', this.members, data);
       },

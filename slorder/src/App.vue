@@ -108,7 +108,7 @@ export default {
         {id: 0, name: 'home', label: this.$t('menu.home')},
         {id: 1, name: 'orderList', label: this.$t('menu.project')},
         {id: 2, name: 'home', label: this.$t('menu.client')},
-        {id: 3, name: 'home', label: this.$t('menu.menber')},
+        {id: 3, name: 'home', label: this.$t('menu.member')},
         {id: 4, name: 'home', label: this.$t('menu.payment_report')},
       ];
     },

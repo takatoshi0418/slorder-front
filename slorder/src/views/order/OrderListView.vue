@@ -16,7 +16,7 @@
           <v-row>
             <v-text-field
               v-model="filterValue"
-              :label="$t('common.project_serch')"
+              :label="$t('common.project_search')"
             />
             <v-spacer />
           </v-row>
