@@ -25,6 +25,9 @@
     <!-- peyment -->
     <PaymentInfo 
       :payment="project.payment"
+      :basic="project.basic"
+      :members="project.members"
+      :other-costs="project.otherCosts"
       :editable="editable"
       @update="dataUpdate"
     />
@@ -125,18 +128,14 @@
             receiveAmount: 20000000
           },
           payment: {
-            estimate: {
-              oparatingWorkByTime: 10.00,
-              oparatingCost: 8640000,
-              otherCost: 5400000,
-              proceeds: 5496000
-            },
-            actual: {
-              oparatingWorkByTime: 3.75,
-              oparatingCost: 1435735,
-              otherCost: 5400000,
-              proceeds: 13164265
-            }
+            // oparatingWorkByTime: 10.00,
+            oparatingWorkByTime: null,
+            // oparatingCost: 8640000,
+            oparatingCost: null,
+            // otherCost: 5400000,
+            otherCost: null,
+            // proceeds: 5496000
+            proceeds: null
           },
           members: [
             {value: 1, unit: 2500, oparatingTime: 150.00},
@@ -170,7 +169,7 @@
               kind: 1
             }
           ]
-        }
+        },
       }
     },
     computed: {
@@ -259,5 +258,5 @@
         array.splice(index, 1);
       }
     }
-}
+  }
 </script>

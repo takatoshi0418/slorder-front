@@ -1,11 +1,12 @@
 import { ValidationObserver, ValidationProvider, extend, localize } from "vee-validate";
-import {required, max, integer} from 'vee-validate/dist/rules';
+import {required, max, integer, double} from 'vee-validate/dist/rules';
 import ja from 'vee-validate/dist/locale/ja.json';
 import Vue from "vue";
 
 extend('integer', integer);
 extend('required', required);
 extend('max', max);
+extend('double', double);
 localize('ja', ja);
 
 Vue.component('ValidationProvider', ValidationProvider);

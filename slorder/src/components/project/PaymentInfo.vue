@@ -49,7 +49,6 @@
           :label="$t('common.oparating_work_by_time')"
           :unit="$t('common.working_man_hours_unit')"
           :float="true"
-          :editable="editable"
         />
       </v-col>
     </v-row>
@@ -68,7 +67,6 @@
           v-model="estimateOparatingCost"
           :label="$t('common.oparating_cost')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
       <v-col
@@ -80,7 +78,6 @@
           v-model="actualOparatingCost"
           :label="$t('common.oparating_cost')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
     </v-row>
@@ -99,7 +96,6 @@
           v-model="estimateOtherCost"
           :label="$t('common.other_cost')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
       <v-col
@@ -111,7 +107,6 @@
           v-model="actualOtherCost"
           :label="$t('common.other_cost')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
     </v-row>
@@ -123,26 +118,24 @@
         {{ $t('common.proceeds') }}
       </v-col>
       <v-col
-        class="column-left"
+        :class="'column-left '+getDeficitClass(estimateProceeds)"
         cols="getCols"
       >
         <NumberField 
           v-model="estimateProceeds"
           :label="$t('common.proceeds')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
       <v-col
         v-if="isVisible"
-        class="column-left"
+        :class="'column-left '+getDeficitClass(actualProceeds)"
         cols="5"
       >
         <NumberField 
           v-model="actualProceeds"
           :label="$t('common.proceeds')"
           :unit="$t('common.currency')"
-          :editable="editable"
         />
       </v-col>
     </v-row>
@@ -150,6 +143,7 @@
 </template>
 <script>
   import NumberField from '@/components/Interface/NumberField.vue'
+  import { dateUtil } from '@/plugins/utilities';
 
   export default {
     name: 'PaymentInfo',
@@ -158,6 +152,19 @@
     },
     props: {
       payment: {
+        type: Object,
+        required: true
+      },
+      basic: {
+        type: Object,
+        required: true
+      },
+      members: {
+        type: Array,
+        required: true
+      },
+      otherCosts: {
+        type: Array,
         required: true
       },
       editable: {
@@ -168,7 +175,19 @@
     computed: {
       estimateOparatingWorkByTime: {
         get () {
-          return this.payment.estimate.oparatingWorkByTime;
+          let db = this.payment.oparatingWorkByTime;
+          if (db !== null) {
+            return db;
+          }
+          let startDate = this.basic.startDate;
+          let limitDate = this.basic.limitDate;
+          if (!startDate || !limitDate) {
+            return 0;
+          }
+          
+          let time = dateUtil.getBetweenHours(startDate, limitDate);
+          console.log(time / 24 / 30);
+          return Number.parseFloat(time / 24 / 30 * this.members.length).toFixed(2)
         },
         set (value) {
           this.$emit('update', this.payment.estimate, 'oparatingWorkByTime', value);
@@ -176,58 +195,86 @@
       },
       estimateOparatingCost: {
         get () {
-          return this.payment.estimate.oparatingCost
-        },
-        set (value) {
-          this.$emit('update', this.payment.estimate, 'oparatingCost', value);
+          let db = this.payment.oparatingCost;
+          if (db !== null) {
+            return db;
+          }
+          let startDate = this.basic.startDate;
+          let limitDate = this.basic.limitDate;
+          if (!startDate || !limitDate) {
+            return 0;
+          }
+
+          var cost = 0;
+          let weekdayCnt = dateUtil.getWeekdays(startDate, limitDate);
+          console.log(weekdayCnt);
+          for (let member of this.members) {
+            cost = cost + member.unit * weekdayCnt * 8;
+          }
+          return cost;
         }
       },
       estimateOtherCost: {
         get () {
-          return this.payment.estimate.otherCost
-        },
-        set (value) {
-          this.$emit('update', this.payment.estimate, 'otherCost', value);
+          let db = this.payment.otherCost
+          if (db !== null) {
+            return db;
+          }
+          let cost = 0;
+          for (let otherCost of this.otherCosts) {
+            cost = cost + otherCost.price;
+          }
+          return cost;
         }
       },
       estimateProceeds: {
         get () {
-          return this.payment.estimate.proceeds
-        },
-        set (value) {
-          this.$emit('update', this.payment.estimate, 'proceeds', value);
+          let db = this.payment.proceeds;
+          if (db !== null) {
+            return db;
+          }
+          let sales = this.basic.receiveAmount;
+          if (!sales) {
+            sales = 0;
+          }
+          return sales - (this.estimateOparatingCost + this.estimateOtherCost);
         }
       },
       actualOparatingWorkByTime: {
         get () {
-          return this.payment.estimate.oparatingWorkByTime;
-        },
-        set (value) {
-          this.$emit('update', this.payment.estimate, 'oparatingWorkByTime', value);
+          let workTime = Number(0);
+          for (let member of this.members) {
+            workTime = workTime + Number.parseFloat((member.oparatingTime/(8*20)))
+          }
+          console.log(workTime)
+          return workTime.toFixed(2);
         }
       },
       actualOparatingCost: {
         get () {
-          return this.payment.actual.oparatingCost
-        },
-        set (value) {
-          this.$emit('update', this.payment.actual, 'oparatingCost', value);
+          let cost = 0;
+          for (let member of this.members) {
+            cost = cost + (member.oparatingTime * member.unit);
+          }
+          return cost;
         }
       },
       actualOtherCost: {
         get () {
-          return this.payment.actual.otherCost
-        },
-        set (value) {
-          this.$emit('update', this.payment.actual, 'otherCost', value);
+          let cost = 0;
+          for (let otherCost of this.otherCosts) {
+            cost = cost + otherCost.price;
+          }
+          return cost;
         }
       },
       actualProceeds: {
         get () {
-          return this.payment.actual.proceeds
-        },
-        set (value) {
-          this.$emit('update', this.payment.actual, 'proceeds', value);
+          let sales = this.basic.receiveAmount;
+          if (!sales) {
+            sales = 0;
+          }
+          return sales - (this.actualOparatingCost + this.actualOtherCost);
         }
       },
       getCols: function() {
@@ -235,6 +282,14 @@
       },
       isVisible: function() {
         return !this.editable;
+      }
+    },
+    methods: {
+      getDeficitClass: function(num) {
+        if (num < 0) {
+          return 'deficit--text';
+        }
+        return '';
       }
     }
   }

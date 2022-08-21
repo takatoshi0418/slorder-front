@@ -132,11 +132,11 @@
     },
     methods: {
         preDay: function () {
-          let pd = dateUtil.addDayByStr(this.date, -1);
+          let pd = dateUtil.addDay(this.date, -1);
           this.date = dateUtil.toStrFormat(pd);
         },
         nextDay: function () {
-          let nd = dateUtil.addDayByStr(this.date, 1);
+          let nd = dateUtil.addDay(this.date, 1);
           this.date = dateUtil.toStrFormat(nd);
         }
     },

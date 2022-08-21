@@ -1,7 +1,7 @@
 <template>
   <span v-if="isEditable()">
     <ValidationProvider 
-      :rules="rule"
+      :rules="rules"
       v-slot="{errors}" 
       :name="label"
     >
@@ -48,8 +48,7 @@ export default {
   },
   data: function() {
     return {
-      errors: [],
-      rule: 'required|integer'
+      errors: []
     }
   },
   methods: {
@@ -66,7 +65,11 @@ export default {
         return this.value;
       },
       set (value) {
-        this.$emit('input', value);
+        let num = Number.parseFloat(value);
+        if (isNaN(num)) {
+          num = value;
+        }
+        this.$emit('input', num);
       }
     },
     suffix: function() {
@@ -79,6 +82,12 @@ export default {
         fractionDigits = 2;
       } 
       return number.toLocaleString('ja-JP',{minimumFractionDigits:fractionDigits}) + this.suffix;
+    },
+    rules: function() {
+      if (this.float) {
+        return 'required|double';
+      }
+      return 'required|integer';
     }
   }
 }
