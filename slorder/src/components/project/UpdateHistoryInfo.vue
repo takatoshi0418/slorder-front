@@ -51,6 +51,7 @@
     name: 'UpdateHistoryInfo',
     props: {
       histories: {
+        type: Array,
         required: true
       }
     },

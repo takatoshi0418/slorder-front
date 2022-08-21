@@ -32,7 +32,7 @@
         cols="getCols"
       >
         <NumberField 
-          v-model="estimateoperatingWorkByTime"
+          v-model="estimateOperatingWorkByTime"
           :label="$t('common.operating_work_by_time')"
           :unit="$t('common.working_man_hours_unit')"
           :float="true"
@@ -45,7 +45,7 @@
         cols="5"
       >
         <NumberField 
-          v-model="actualoperatingWorkByTime"
+          v-model="actualOperatingWorkByTime"
           :label="$t('common.operating_work_by_time')"
           :unit="$t('common.working_man_hours_unit')"
           :float="true"
@@ -64,7 +64,7 @@
         cols="getCols"
       >
         <NumberField 
-          v-model="estimateoperatingCost"
+          v-model="estimateOperatingCost"
           :label="$t('common.operating_cost')"
           :unit="$t('common.currency')"
         />
@@ -75,7 +75,7 @@
         cols="5"
       >
         <NumberField 
-          v-model="actualoperatingCost"
+          v-model="actualOperatingCost"
           :label="$t('common.operating_cost')"
           :unit="$t('common.currency')"
         />
@@ -173,7 +173,7 @@
       }
     },
     computed: {
-      estimateoperatingWorkByTime: {
+      estimateOperatingWorkByTime: {
         get () {
           let db = this.payment.operatingWorkByTime;
           if (db !== null) {
@@ -193,7 +193,7 @@
           this.$emit('update', this.payment.estimate, 'operatingWorkByTime', value);
         }
       },
-      estimateoperatingCost: {
+      estimateOperatingCost: {
         get () {
           let db = this.payment.operatingCost;
           if (db !== null) {
@@ -229,18 +229,14 @@
       },
       estimateProceeds: {
         get () {
-          let db = this.payment.proceeds;
-          if (db !== null) {
-            return db;
-          }
           let sales = this.basic.receiveAmount;
           if (!sales) {
             sales = 0;
           }
-          return sales - (this.estimateoperatingCost + this.estimateOtherCost);
+          return sales - (this.estimateOperatingCost + this.estimateOtherCost);
         }
       },
-      actualoperatingWorkByTime: {
+      actualOperatingWorkByTime: {
         get () {
           let workTime = Number(0);
           for (let member of this.members) {
@@ -250,7 +246,7 @@
           return workTime.toFixed(2);
         }
       },
-      actualoperatingCost: {
+      actualOperatingCost: {
         get () {
           let cost = 0;
           for (let member of this.members) {

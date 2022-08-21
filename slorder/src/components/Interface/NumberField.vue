@@ -31,7 +31,8 @@ export default {
     },
     unit: {
       type: String,
-      require: true
+      require: true,
+      default: ''
     },
     notSpace: {
       type: Boolean,

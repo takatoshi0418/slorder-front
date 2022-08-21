@@ -62,6 +62,7 @@ import NumberField from '@/components/Interface/NumberField.vue';
 },
     props: {
       member: {
+        type: Object,
         required: true
       },
       index: {
@@ -69,6 +70,7 @@ import NumberField from '@/components/Interface/NumberField.vue';
         required: true
       },
       memberList: {
+        type: Array,
         required: true
       },
       editable: {

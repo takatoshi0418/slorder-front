@@ -133,9 +133,7 @@
             // operatingCost: 8640000,
             operatingCost: null,
             // otherCost: 5400000,
-            otherCost: null,
-            // proceeds: 5496000
-            proceeds: null
+            otherCost: null
           },
           members: [
             {value: 1, unit: 2500, operatingTime: 150.00},

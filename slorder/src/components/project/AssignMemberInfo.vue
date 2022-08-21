@@ -78,6 +78,7 @@
     },
     props: {
       members: {
+        type: Array,
         required: true
       },
       editable: {

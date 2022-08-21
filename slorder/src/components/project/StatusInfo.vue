@@ -83,6 +83,7 @@
     name: 'StatusInfo',
     props: {
       value: {
+        type: Number,
         required: true
       },
       doReceive: {
