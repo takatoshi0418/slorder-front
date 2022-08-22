@@ -186,8 +186,8 @@
           }
           
           let time = dateUtil.getBetweenHours(startDate, limitDate);
-          console.log(time / 24 / 30);
-          return Number.parseFloat(time / 24 / 30 * this.members.length).toFixed(2)
+          console.log(time / 24 / 20);
+          return Number.parseInt(time / 24 / 20 * this.members.length).toFixed(2)
         },
         set (value) {
           this.$emit('update', this.payment.estimate, 'operatingWorkByTime', value);
@@ -207,7 +207,7 @@
 
           var cost = 0;
           let weekdayCnt = dateUtil.getWeekdays(startDate, limitDate);
-          console.log(weekdayCnt);
+          console.log("仕事："+weekdayCnt);
           for (let member of this.members) {
             cost = cost + member.unit * weekdayCnt * 8;
           }
@@ -270,7 +270,7 @@
           if (!sales) {
             sales = 0;
           }
-          return sales - (this.actualoperatingCost + this.actualOtherCost);
+          return sales - (this.actualOperatingCost + this.actualOtherCost);
         }
       },
       getCols: function() {
