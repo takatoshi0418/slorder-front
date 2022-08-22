@@ -17,13 +17,16 @@
 
     <!-- basicInfo -->
     <BasicInfo 
+      v-if="isLoadend"
       :basic-info="project.basic"
+      :selectable-clients="selectableClients"
       :editable="editable"
       @update="dataUpdate"
     />
 
     <!-- payment -->
     <PaymentInfo 
+      v-if="isLoadend"
       :payment="project.payment"
       :basic="project.basic"
       :members="project.members"
@@ -34,7 +37,9 @@
 
     <!-- assign_member -->
     <AssignMemberInfo
+      v-if="isLoadend"
       :members="project.members"
+      :selectable-members="selectableMembers"
       :editable="editable"
       :do-operating-register="doOperatingRegister"
       @update="arrayDataUpdate"
@@ -44,6 +49,7 @@
 
     <!-- other_cost -->
     <OtherCostInfo 
+      v-if="isLoadend"
       :other-costs="project.otherCosts"
       @update="arrayDataUpdate"
       :editable="editable"
@@ -103,6 +109,7 @@
   import OtherCostInfo from '@/components/project/OtherCostInfo.vue'
   import UpdateHistoryInfo from '@/components/project/UpdateHistoryInfo.vue'
   import AssignMemberInfo from '@/components/project/AssignMemberInfo.vue'
+  import { get } from '@/plugins/apiHandler'
 
   export default {
     name: 'OrderEditView',
@@ -117,65 +124,30 @@
     data() {
       return {
         editable: false,
-        project: {
-          status: 1,
-          basic: {
-            no: 'P-20220301-0002',
-            name: 'ペット行動管理システム',
-            client: 2,
-            startDate: '2022-03-01',
-            limitDate: '2022-04-30',
-            receiveAmount: 20000000
-          },
-          payment: {
-            // operatingWorkByTime: 10.00,
-            operatingWorkByTime: null,
-            // operatingCost: 8640000,
-            operatingCost: null,
-            // otherCost: 5400000,
-            otherCost: null
-          },
-          members: [
-            {value: 1, unit: 2500, operatingTime: 150.00},
-            {value: 2, unit: 4000, operatingTime: 90.00},
-            {value: 3, unit: 3500, operatingTime: 100.01},
-            {value: 4, unit: 3500, operatingTime: 120.40}
-          ],
-          otherCosts: [
-            {
-              name: 'サーバー01',
-              kind: 1,
-              buyDate: '2022-03-01',
-              price: 5000000
-            },
-            {
-              name: '武田信玄',
-              kind: 2,
-              buyDate: '2022-03-04',
-              price: 400000
-            }
-          ],
-          histories: [
-            {
-              name: '受注 太郎',
-              date: '2022-02-01',
-              kind: 0
-            },
-            {
-              name: '受注 太郎',
-              date: '2022-02-20',
-              kind: 1
-            }
-          ]
-        },
+        project: {},
+        selectableMembers: [],
+        selectableClients: [],
+        isProjectLoaded: false,
+        isSelectableMembersLoaded: false,
+        isSelectableClientsLoaded: false
       }
+    },
+    mounted: function() {
+      this.setProject();
+      this.setSelectableMembers();
+      this.setSelectableClients();
     },
     computed: {
       isViewMode: function() {
-        return !this.editable;
+        return this.isLoadend && !this.editable;
       },
       isEditMode: function(){
-        return this.editable;
+        return this.isLoadend && this.editable;
+      },
+      isLoadend: function() {
+        return this.isProjectLoaded 
+          && this.isSelectableMembersLoaded
+          && this.isSelectableClientsLoaded
       }
     },
     methods: {
@@ -254,6 +226,80 @@
           return;
         }
         array.splice(index, 1);
+      },
+      setProject: function() {
+        this.$emit('loading', true);
+        try {
+          get('project/aaaa').then(response => {
+            this.project = response.data;
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$emit('loading', false);
+        }
+      },
+      setSelectableMembers: function() {
+        this.$emit('loading', true);
+        try {
+          get('selectablememberlist').then(response => {
+            this.selectableMembers = response.data;
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$emit('loading', false);
+        }
+      },
+      setSelectableClients: function() {
+        this.$emit('loading', true);
+        try {
+          get('selectableclientlist').then(response => {
+            this.selectableClients = response.data;
+            console.log(response.data);
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$emit('loading', false);
+        }
+      }
+    },
+    watch: {
+      project: {
+        handler() {
+          this.isProjectLoaded = true
+          if (this.isLoadend) {
+            this.$emit('loading', false);
+          }
+        },
+        deep: true
+      },
+      selectableMembers: {
+        handler() {
+          this.isSelectableMembersLoaded = true
+          if (this.isLoadend) {
+            this.$emit('loading', false);
+          }
+        },
+        deep: true
+      },
+      selectableClients: {
+        handler() {
+          this.isSelectableClientsLoaded = true
+          if (this.isLoadend) {
+            this.$emit('loading', false);
+          }
+        }
       }
     }
   }

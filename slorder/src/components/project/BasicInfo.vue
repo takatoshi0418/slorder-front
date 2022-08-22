@@ -52,7 +52,7 @@
         <SelectField
           v-model="client"
           :label="$t('common.client_name')"
-          :items="clientList"
+          :items="selectableClients"
           item-value="id"
           item-text="name"
           :editable="editable"
@@ -131,6 +131,11 @@
     },
     props: {
       basicInfo: {
+        type: Object,
+        required: true
+      },
+      selectableClients: {
+        type: Array,
         required: true
       },
       editable: {
@@ -139,16 +144,6 @@
       }
     },
     computed: {
-      clientList: function() {
-        return [
-          {id: 1, name: 'ポメラニアン佐藤'},
-          {id: 2, name: '三日月農協組合'},
-          {id: 3, name: '山田商店'},
-          {id: 4, name: '田中文具店'},
-          {id: 5, name: 'スズキ薬局'},
-          {id: 6, name: '三日月市'}
-        ]
-      },
       projectNo: {
         get () {
           return this.basicInfo.no;

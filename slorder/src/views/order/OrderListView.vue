@@ -102,9 +102,9 @@
     mounted: function() {
       this.$emit('loading', true);
       try {
-        get('projectlist').then(reseponse => {
-          this.projectList = reseponse.data
-          console.log(reseponse.data)
+        get('projectlist').then(response => {
+          this.projectList = response.data
+          console.log(response.data)
         })
         .catch(err => {
           console.error(err);

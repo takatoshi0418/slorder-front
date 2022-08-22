@@ -50,7 +50,7 @@
       :key="index"
       :member="member"
       :index="index"
-      :member-list="memberList"
+      :member-list="selectableMembers"
       :get-dynamic-cols="clos"
       :editable="editable"
       :is-operating-time-visible="operatingTimeVisible"
@@ -81,6 +81,10 @@
         type: Array,
         required: true
       },
+      selectableMembers: {
+        type: Array,
+        required: true
+      },
       editable: {
         type: Boolean,
         default: false
@@ -91,15 +95,6 @@
       }
     },
     computed: {
-      memberList: function() {
-        return [
-          {no: 1, name: "浅井 長政", unit: 2500},
-          {no: 2, name: "織田 信長", unit: 4000},
-          {no: 3, name: "徳川 家康", unit: 3500},
-          {no: 4, name: "豊臣 秀吉", unit: 3500},
-          {no: 5, name: "織田 信成", unit: 1500}
-        ]
-      },
       clos: function() {
         return this.editable? 5: 4;
       },

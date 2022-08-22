@@ -176,7 +176,7 @@
       estimateOperatingWorkByTime: {
         get () {
           let db = this.payment.operatingWorkByTime;
-          if (db !== null) {
+          if (db !== -1) {
             return db;
           }
           let startDate = this.basic.startDate;
@@ -185,18 +185,18 @@
             return 0;
           }
           
-          let time = dateUtil.getBetweenHours(startDate, limitDate);
-          console.log(time / 24 / 20);
-          return Number.parseInt(time / 24 / 20 * this.members.length).toFixed(2)
+          let time = dateUtil.getWeekdays(startDate, limitDate) * this.members.length / 20
+          console.log(time);
+          return Number.parseInt(time).toFixed(2)
         },
         set (value) {
-          this.$emit('update', this.payment.estimate, 'operatingWorkByTime', value);
+          this.$emit('update', this.payment, 'operatingWorkByTime', value);
         }
       },
       estimateOperatingCost: {
         get () {
           let db = this.payment.operatingCost;
-          if (db !== null) {
+          if (db !== -1) {
             return db;
           }
           let startDate = this.basic.startDate;
@@ -217,7 +217,7 @@
       estimateOtherCost: {
         get () {
           let db = this.payment.otherCost
-          if (db !== null) {
+          if (db !== -1) {
             return db;
           }
           let cost = 0;
