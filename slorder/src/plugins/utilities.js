@@ -32,18 +32,18 @@ const dateUtil = {
   getWeekdays: function(startStr, endStr) {
     if (!startStr || typeof startStr !== 'string'
       || !endStr || typeof endStr !== 'string') {
-        return;
+        return -1;
       }
     let startDate = new Date(startStr);
     let endDate = new Date(endStr);
 
     if (startDate > endDate) {
-      return;
+      return -1;
     }
     
     let workDate = new Date(startDate);
     let WeekdayCnt = 0;
-    while(workDate.getTime() < endDate.getTime()) {
+    while(workDate.getTime() <= endDate.getTime()) {
       if (this.isWeekday(workDate)) {
         WeekdayCnt = WeekdayCnt + 1;
       }

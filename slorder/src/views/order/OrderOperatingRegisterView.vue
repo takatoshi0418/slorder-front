@@ -40,7 +40,7 @@
           class="column"
           cols="8"
         >
-          {{ project.client }}
+          {{ project.clientName }}
         </v-col>
       </v-row>
     </v-container>
@@ -82,79 +82,164 @@
           {{ $t('common.operating_time') }}
         </v-col>
       </v-row>
-      <v-row
-        v-for="member of project.memberList"
-        :key="member.index"
-      >
-        <v-col
-          class="column"
-          cols="8"
-        >
-          {{ member.name }}
-        </v-col>
-        <v-col
-          class="column"
-          cols="4"
-        >
-          <TimeField 
-            v-model="member.operatingTime"
-            :label="$t('common.operating_time')"
-            editable
-            solo
-          />
-        </v-col>
-      </v-row>
+      <WorkOfMemberUnit 
+        v-for="(member, index) of projectMembers" 
+        :key="index"
+        :project-member="member"
+        :index="index"
+        @update="dataUpdate"
+      />
     </v-container>
+    <v-row>
+      <v-spacer />
+      <v-btn 
+        @click="doRegister()"
+        class="primary secondary--text mx-4"
+      >
+        {{ $t('common.register') }}
+      </v-btn>
+      <v-btn 
+        @click="doReturn()"
+        class="cancel secondary--text mx-4"
+      >
+        {{ $t('common.return') }}
+      </v-btn>
+      <v-spacer />
+    </v-row>
   </v-container>
 </template>
 <script>
   import {dateUtil} from '@/plugins/utilities.js'
   import DateField from '@/components/Interface/DateField.vue'
-  import TimeField from '@/components/Interface/TimeField.vue'
+  import {get, post} from '@/plugins/apiHandler'
+  import WorkOfMemberUnit from '../../components/project/WorkOfMemberUnit.vue'
+
   export default {
     name: "OrderWorkingRegisterView",
+    props: {
+      projectNo: {
+        type: Number,
+        required: true
+      }
+    },
     data: function () {
-        return {
-          date: dateUtil.nowDateStr(),
-          memberList: [],
-          project: {
-            no: 'P-20220301-0002',
-            name: 'ペット行動管理システム',
-            client: "ポメラニアン佐藤",
-            memberList: [
-              {name: '浅井 長政', operatingTime: '08:01'},
-              {name: '織田 信長', operatingTime: '08:01'},
-              {name: '徳川 家康', operatingTime: '08:01'},
-              {name: '豊臣 秀吉', operatingTime: '08:01'}
-            ]
-          }
+      return {
+        date: dateUtil.nowDateStr(),
+        project: {},
+        isProjectLoaded: false,
+        projectMembers :[],
+        isProjectMembersLoaded: false
       };
     },
+    mounted: function() {
+      this.setProjectMemberList();
+      this.setProject();
+    },
     methods: {
-        preDay: function () {
-          let pd = dateUtil.addDay(this.date, -1);
-          this.date = dateUtil.toStrFormat(pd);
-        },
-        nextDay: function () {
-          let nd = dateUtil.addDay(this.date, 1);
-          this.date = dateUtil.toStrFormat(nd);
+      preDay: function () {
+        let pd = dateUtil.addDay(this.date, -1);
+        this.date = dateUtil.toStrFormat(pd);
+      },
+      nextDay: function () {
+        let nd = dateUtil.addDay(this.date, 1);
+        this.date = dateUtil.toStrFormat(nd);
+      },
+      setProjectMemberList: function() {
+        this.isProjectMembersLoaded = false;
+        try {
+          get('projectbelongworklist/' + this.projectNo + '/' + this.date).then(response => {
+            this.projectMembers = response.data
+            console.log(response.data)
+            this.isProjectMembersLoaded = true;
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
         }
+      },
+      setProject: function() {
+        this.isProjectLoaded = false;
+        try {
+          get('simpleproject/' + this.projectNo).then(response => {
+            this.project = response.data
+            console.log(response.data)
+            this.isProjectLoaded = true;
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$errorProcess(err);
+        }
+      },
+      dataUpdate: function(index, key1, key2, value) {
+        if (index === undefined || key1 === undefined 
+          || key2 === undefined || value === undefined) {
+          return;
+        }
+        this.projectMembers[index][key1][key2] = value;
+      },
+      doReturn: function() {
+        this.$router.replace({
+          name: 'orderEdit',
+          params: {
+            projectNo: this.projectNo
+          }
+        })
+      },
+      doRegister: function() {
+        for (let member of this.projectMembers) {
+          member.work.projectId = member.projectId
+          member.work.memberId = member.memberId
+          member.work.workDate = this.date
+        }
+
+        try {
+          post('setwork', this.projectMembers).then(response => {
+            console.log(response);
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          })
+        } catch (err) {
+          console.error(err);
+          this.$errorProcess(err);
+        }
+      }
+    },
+    computed: {
+      isLoadend: {
+        get() {
+          return this.isProjectMembersLoaded && this.isProjectLoaded
+        }
+      }
     },
     watch: {
       date: {
         handler: function() {
-          this.project.memberList = [
-            {name: '浅井 長政', operatingTime: '08:01'},
-            {name: '織田 信長', operatingTime: '08:01'},
-            {name: '徳川 家康', operatingTime: '08:01'},
-            {name: '豊臣 秀吉', operatingTime: '08:01'}
-          ]
+          this.setProjectMemberList();
         }
+      },
+      isLoadend: {
+        handler: function(isLoadend) {
+          if (isLoadend) {
+            this.$emit('loading', false);
+          } else {
+            this.$emit('loading', true);
+          }
+        },
+        immediate: true
       }
     },
     components: {
     DateField,
-    TimeField
+    WorkOfMemberUnit
 }
 }
 </script>

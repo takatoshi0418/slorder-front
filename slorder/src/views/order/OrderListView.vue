@@ -79,6 +79,8 @@
     <v-pagination
       v-model="page"
       :length="pageCount"
+      circle
+      :total-visible="10"
     />
   </v-container>
 </template>
@@ -163,11 +165,12 @@
     },
     methods: {
       filterOnlyCapsText: function(value, search) {
-        if (!value || typeof value !== 'string') {
+        if (!value) {
           return false;
         }
+        let textValue = new String(value)
 
-        if (value.indexOf(search) !== -1 || value.indexOf(search) !== -1) {
+        if (textValue.indexOf(search) !== -1 || textValue.indexOf(search) !== -1) {
           return true;
         }
         return false;
@@ -192,9 +195,13 @@
         }
         return true;
       },
-      doEdit: function(project_no) {
-        project_no
-        this.$router.replace({name: 'orderEdit'})
+      doEdit: function(projectNo) {
+        this.$router.replace({
+          name: 'orderEdit',
+          params: {
+            projectNo: projectNo
+          }
+        })
       }
     },
     watch: {
@@ -230,48 +237,4 @@
     }
     return false;
   }
-  // const projectList = [
-  //   {
-  //     project_no : 'P-20220301-0001',
-  //     project_name: 'ペット行動管理システム',
-  //     client_name: 'ポメラニアン佐藤', 
-  //     status: '見積中',
-  //     isEnabled: true
-  //   },
-  //   {
-  //     project_no : 'P-20220301-0002',
-  //     project_name: '野菜在庫管理システム',
-  //     client_name: '三日月農協組合', 
-  //     status: '受注済',
-  //     isEnabled: true
-  //   },
-  //   {
-  //     project_no : 'P-20220301-0003',
-  //     project_name: '売上管理システム',
-  //     client_name: '山田商店', 
-  //     status: '納品済',
-  //     isEnabled: true
-  //   },
-  //   {
-  //     project_no : 'P-20220301-0004',
-  //     project_name: '文具在庫管理システム',
-  //     client_name: '田中文具店', 
-  //     status: '検収確認済',
-  //     isEnabled: true
-  //   },
-  //   {
-  //     project_no : 'P-20220301-0005',
-  //     project_name: '顧客管理システム',
-  //     client_name: 'スズキ薬局', 
-  //     status: '入金確認済',
-  //     isEnabled: false
-  //   },
-  //   {
-  //     project_no : 'P-20220301-0006',
-  //     project_name: '帳票管理システム',
-  //     client_name: '三日月市', 
-  //     status: '失注',
-  //     isEnabled: false
-  //   },
-  // ]
 </script>

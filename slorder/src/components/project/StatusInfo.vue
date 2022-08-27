@@ -8,12 +8,12 @@
         {{ $t('common.status') }}
       </v-col>
       <v-col
-        cols="1"
+        cols="2"
         class="column-flex-center"
       >
         {{ status }}
       </v-col>
-      <v-col cols="10">
+      <v-col cols="9">
         <span v-if="ReceiveVisible">
           <v-btn
             @click="doReceive"

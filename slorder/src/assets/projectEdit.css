@@ -10,7 +10,8 @@
   justify-content: center;
 }
 .column, .column-right, .column-left, .column-center, 
-.column-flex-center, .column-right-flex-center {
+.column-flex-center, .column-right-flex-center,
+.column-left-flex-center {
   border-collapse: collapse;
   border: 1px solid #757575;
 }
@@ -32,4 +33,9 @@
   display: flex;
   align-items: center;
   justify-content: right;
+}
+.column-left-flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: left;
 }

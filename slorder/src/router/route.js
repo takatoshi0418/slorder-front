@@ -3,6 +3,7 @@ import OrderListView from '@/views/order/OrderListView.vue'
 import HomeView from '@/views/HomeView.vue'
 import OrderEditView from '@/views/order/OrderEditView.vue'
 import OrderOperatingRegisterView from '@/views/order/OrderOperatingRegisterView.vue'
+import ErrorsView from '@/views/ErrorsView.vue'
 
 export default [
   {
@@ -18,16 +19,24 @@ export default [
   {
     path: '/order/edit',
     name: 'orderEdit',
-    component: OrderEditView
+    component: OrderEditView,
+    props: true
   },
   {
     path: '/order/operatingregister',
     name: 'orderOperatingRegister',
-    component: OrderOperatingRegisterView
+    component: OrderOperatingRegisterView,
+    props: true
   },
   {
     path: '/home',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/error',
+    name: 'errors',
+    component: ErrorsView,
+    props: true
   },
 ]

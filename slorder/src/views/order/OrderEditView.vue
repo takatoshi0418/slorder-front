@@ -39,12 +39,13 @@
     <AssignMemberInfo
       v-if="isLoadend"
       :members="project.members"
+      :project-no="projectNo"
       :selectable-members="selectableMembers"
       :editable="editable"
-      :do-operating-register="doOperatingRegister"
       @update="arrayDataUpdate"
       @add="addArray"
       @delete="deleteArray"
+      @registerWork="doOperatingRegister"
     />
 
     <!-- other_cost -->
@@ -120,7 +121,13 @@
     OtherCostInfo,
     UpdateHistoryInfo,
     AssignMemberInfo
-  },
+    },
+    props: {
+      projectNo: {
+        type: Number,
+        required: true
+      }
+    },
     data() {
       return {
         editable: false,
@@ -160,8 +167,13 @@
       doCancel: function() {
         this.editable = false;
       },
-      doOperatingRegister: function() {
-        this.$router.replace({name: 'orderOperatingRegister'});
+      doOperatingRegister: function(projectNo) {
+        this.$router.replace({
+          name: 'orderOperatingRegister',
+          params: {
+            projectNo: projectNo
+          }
+        });
       },
       doReceive: function() {
 
@@ -228,9 +240,8 @@
         array.splice(index, 1);
       },
       setProject: function() {
-        this.$emit('loading', true);
         try {
-          get('project/aaaa').then(response => {
+          get('project/'+this.projectNo).then(response => {
             this.project = response.data;
           })
           .catch(err => {
@@ -243,7 +254,6 @@
         }
       },
       setSelectableMembers: function() {
-        this.$emit('loading', true);
         try {
           get('selectablememberlist').then(response => {
             this.selectableMembers = response.data;
@@ -258,7 +268,6 @@
         }
       },
       setSelectableClients: function() {
-        this.$emit('loading', true);
         try {
           get('selectableclientlist').then(response => {
             this.selectableClients = response.data;
@@ -278,28 +287,29 @@
       project: {
         handler() {
           this.isProjectLoaded = true
-          if (this.isLoadend) {
-            this.$emit('loading', false);
-          }
         },
         deep: true
       },
       selectableMembers: {
         handler() {
           this.isSelectableMembersLoaded = true
-          if (this.isLoadend) {
-            this.$emit('loading', false);
-          }
         },
         deep: true
       },
       selectableClients: {
         handler() {
           this.isSelectableClientsLoaded = true
-          if (this.isLoadend) {
-            this.$emit('loading', false);
-          }
         }
+      },
+      isLoadend: {
+        handler(isLoadend) {
+          if (isLoadend) {
+            this.$emit('loading', false);
+          }else {
+            this.$emit('loading', true);
+          }
+        },
+        immediate: true
       }
     }
   }

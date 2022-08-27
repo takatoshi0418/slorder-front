@@ -55,13 +55,29 @@
       };
     },
     methods: {
-      submit () {
+      async submit () {
         this.$refs.observer.validate();
-
+        let digestPasswd = await getDigestPassword(this.password)
+        console.log(digestPasswd);
         if(this.errors.length === 0) {
           this.$router.push({name: 'orderList'})
         }
       }
+    },
+    watch: {
+      password: {
+        async handler(newData) {
+        let digestPasswd = await getDigestPassword(newData)
+        console.log(digestPasswd);
+        }
+      }
     }
+  }
+
+  async function getDigestPassword(passwd) {
+    let encodePasswd = new TextEncoder().encode(passwd)
+    let hashBuffer = await crypto.subtle.digest("SHA-256", encodePasswd);
+    let hashArray = Array.from(new Uint8Array(hashBuffer))
+    return hashArray.map(b => b.toString(16).padStart(2, '')).join('')
   }
 </script>

@@ -9,7 +9,17 @@ function get(addUrl) {
   if (isInvalidUrl(addUrl)) {
     throw new ApiHandlerException('illegal addURL');
   }
-  return axios.get(baseUrl + addUrl)
+  return axios.get(getUrl(addUrl));
+}
+
+function post(addUrl, payload) {
+  if (isInvalidBaseUrl()) {
+    throw new ApiHandlerException('illegal baseURL');
+  }
+  if (isInvalidUrl(addUrl)) {
+    throw new ApiHandlerException('illegal addURL');
+  }
+  return axios.post(getUrl(addUrl), payload);
 }
 
 function isInvalidBaseUrl() {
@@ -23,10 +33,14 @@ function isInvalidUrl(url) {
     || typeof url !== 'string'
 }
 
+function getUrl(addUrl) {
+  return baseUrl + addUrl
+}
+
 class ApiHandlerException extends Error {
   constructor(...err) {
     super(err)
   }
 }
 
-export {get}
+export {get, post}

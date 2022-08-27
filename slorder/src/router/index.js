@@ -5,7 +5,6 @@ import routes from '@/router/route'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
   routes
 })
 

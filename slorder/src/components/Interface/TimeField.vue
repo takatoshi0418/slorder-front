@@ -89,8 +89,7 @@ export default {
     selectTime: {
       handler: function(value) {
         this.timeValue = value;
-      },
-      deep: true
+      }
     }
   }
 }

@@ -55,6 +55,16 @@ Vue.prototype.$projectHistoryKinds = [
   {id: 9, label: i18n.tc('common.lost_order_cancel')}
 ]
 
+Vue.prototype.$errorProcess = function(error) {
+  console.error(error);
+  router.replace({
+    name: 'errors', 
+    params:{
+      errors: error
+    }
+  })
+}
+
 new Vue({
   router,
   store,

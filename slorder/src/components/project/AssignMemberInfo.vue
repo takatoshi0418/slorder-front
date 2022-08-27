@@ -4,7 +4,7 @@
       {{ $t('common.assign_member') }}
       <v-btn 
         v-if="viewMode"
-        @click="doOperatingRegister"
+        @click="doOperatingRegister(projectNo)"
         class="primary secondary--text d-block ml-auto mb-2"
       >
         {{ $t('common.operating_register') }}
@@ -81,6 +81,10 @@
         type: Array,
         required: true
       },
+      projectNo: {
+        type: Number,
+        required: true
+      },
       selectableMembers: {
         type: Array,
         required: true
@@ -88,10 +92,6 @@
       editable: {
         type: Boolean,
         default: false
-      },
-      doOperatingRegister: {
-        type: Function,
-        required: true
       }
     },
     computed: {
@@ -128,6 +128,9 @@
       },
       doLiftingMember: function(index) {
         this.$emit('delete', this.members, index);
+      },
+      doOperatingRegister: function() {
+        this.$emit('registerWork', this.projectNo);
       }
     },
     watch: {
