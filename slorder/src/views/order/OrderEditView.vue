@@ -52,6 +52,7 @@
     <OtherCostInfo 
       v-if="isLoadend"
       :other-costs="project.otherCosts"
+      :other-cost-kinds="selectableOtherCostKinds"
       @update="arrayDataUpdate"
       :editable="editable"
       @add="addArray"
@@ -61,20 +62,19 @@
     <!-- edit button -->
     <v-container 
       v-if="isViewMode"
-      class="primary--text mb-8"
+      class="primary--text mb-8 d-flex justify-center"
     >
       <v-btn 
-        class="primary secondary--text d-block mx-auto"
+        class="primary secondary--text d-block mx-4"
         @click="doEdit"
       >
         {{ $t('common.edit') }}
       </v-btn>
       <v-btn 
-        v-if="isEditMode"
-        class="primary secondary--text d-block mx-auto"
-        @click="doSave"
+        class="cancel secondary--text d-block mx-4"
+        @click="doReturn"
       >
-        {{ $t('common.save') }}
+        {{ $t('common.return') }}
       </v-btn>
     </v-container>
     <!-- register cancel button -->
@@ -110,7 +110,7 @@
   import OtherCostInfo from '@/components/project/OtherCostInfo.vue'
   import UpdateHistoryInfo from '@/components/project/UpdateHistoryInfo.vue'
   import AssignMemberInfo from '@/components/project/AssignMemberInfo.vue'
-  import { get } from '@/plugins/apiHandler'
+  import { get, post } from '@/plugins/apiHandler'
 
   export default {
     name: 'OrderEditView',
@@ -125,7 +125,8 @@
     props: {
       projectNo: {
         type: Number,
-        required: true
+        required: false,
+        default: -1
       }
     },
     data() {
@@ -134,15 +135,25 @@
         project: {},
         selectableMembers: [],
         selectableClients: [],
+        selectableOtherCostKinds: [],
         isProjectLoaded: false,
         isSelectableMembersLoaded: false,
-        isSelectableClientsLoaded: false
+        isSelectableClientsLoaded: false,
+        isSelectableOtherCostKindsLoaded: false,
+        isNew: false,
       }
     },
     mounted: function() {
+      if (this.projectNo !== -1) {
       this.setProject();
+      } else {
+        this.setPureProject();
+        this.editable = true;
+        this.isNew = true;
+      }
       this.setSelectableMembers();
       this.setSelectableClients();
+      this.setSelectableOtherCostKinds();
     },
     computed: {
       isViewMode: function() {
@@ -155,6 +166,7 @@
         return this.isProjectLoaded 
           && this.isSelectableMembersLoaded
           && this.isSelectableClientsLoaded
+          && this.isSelectableOtherCostKindsLoaded
       }
     },
     methods: {
@@ -162,10 +174,28 @@
         this.editable = true;
       },
       doRegister: function() {
+        try {
+          post('setproject', this.project).then(response => {
+            console.log(response)
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          })
+        } catch (err) {
+          console.error(err);
+          this.$errorProcess(err);
+        }
         this.editable = false;
       },
       doCancel: function() {
+        if (this.isNew) {
+          this.$router.replace({name: 'orderList'});
+        }
         this.editable = false;
+      },
+      doReturn: function() {
+        this.$router.replace({name: 'orderList'});
       },
       doOperatingRegister: function(projectNo) {
         this.$router.replace({
@@ -242,6 +272,21 @@
       setProject: function() {
         try {
           get('project/'+this.projectNo).then(response => {
+            console.log(response.data);
+            this.project = response.data;
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$emit('loading', false);
+        }
+      },
+      setPureProject: function() {
+        try {
+          get('getpureproject').then(response => {
             this.project = response.data;
           })
           .catch(err => {
@@ -281,6 +326,21 @@
           console.error(err);
           this.$emit('loading', false);
         }
+      },
+      setSelectableOtherCostKinds: function() {
+        try {
+          get('selectableothercostkindlist').then(response => {
+            this.selectableOtherCostKinds = response.data;
+            console.log(response.data);
+          })
+          .catch(err => {
+            console.error(err);
+            throw err;
+          });
+        } catch (err) {
+          console.error(err);
+          this.$emit('loading', false);
+        }
       }
     },
     watch: {
@@ -299,6 +359,11 @@
       selectableClients: {
         handler() {
           this.isSelectableClientsLoaded = true
+        }
+      },
+      selectableOtherCostKinds: {
+        handler() {
+          this.isSelectableOtherCostKindsLoaded = true
         }
       },
       isLoadend: {

@@ -46,7 +46,7 @@
             <v-spacer />
             <v-btn 
               class="primary secondary--text"
-              @click="doEdit"
+              @click="doCreate()"
             >
               {{ $t('common.project_new_receive') }}
             </v-btn>
@@ -200,6 +200,14 @@
           name: 'orderEdit',
           params: {
             projectNo: projectNo
+          }
+        })
+      },
+      doCreate: function() {
+        this.$router.replace({
+          name: 'orderEdit',
+          params: {
+            projectNo: -1
           }
         })
       }

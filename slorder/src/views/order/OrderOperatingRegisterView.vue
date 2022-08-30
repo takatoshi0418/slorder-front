@@ -112,7 +112,7 @@
   import {dateUtil} from '@/plugins/utilities.js'
   import DateField from '@/components/Interface/DateField.vue'
   import {get, post} from '@/plugins/apiHandler'
-  import WorkOfMemberUnit from '../../components/project/WorkOfMemberUnit.vue'
+  import WorkOfMemberUnit from '@/components/project/WorkOfMemberUnit.vue'
 
   export default {
     name: "OrderWorkingRegisterView",

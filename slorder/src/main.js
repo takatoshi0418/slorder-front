@@ -52,7 +52,9 @@ Vue.prototype.$projectHistoryKinds = [
   {id: 6, label: i18n.tc('common.receive_cancel')},
   {id: 7, label: i18n.tc('common.delivery_cancel')},
   {id: 8, label: i18n.tc('common.acceptance_cancel')},
-  {id: 9, label: i18n.tc('common.lost_order_cancel')}
+  {id: 9, label: i18n.tc('common.paymented_cancel')},
+  {id: 10, label: i18n.tc('common.lost_order_cancel')},
+  {id: 100, label: i18n.tc('common.save')},
 ]
 
 Vue.prototype.$errorProcess = function(error) {

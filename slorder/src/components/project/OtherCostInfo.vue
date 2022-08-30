@@ -47,7 +47,7 @@
       v-for="(cost,index) of otherCosts"
       :key="index"
       :cost="cost"
-      :other-cost-kind-list="otherCostKindList"
+      :other-cost-kind-list="otherCostKinds"
       :index="index"
       :editable="editable"
       :is-delete-visible="deleteVisible"
@@ -64,6 +64,11 @@
     name: 'OtherCostInfo',
     props: {
       otherCosts: {
+        type: Array,
+        required: true
+      },
+      otherCostKinds: {
+        type: Array,
         required: true
       },
       editable: {

@@ -31,7 +31,7 @@
         v-model="costKind"
         :label="$t('common.kind')"
         :items="otherCostKindList"
-        item-value="id"
+        item-value="kindId"
         item-text="name"
         :editable="editable"
       />
