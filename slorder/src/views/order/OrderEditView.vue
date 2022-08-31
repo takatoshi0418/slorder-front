@@ -177,6 +177,8 @@
         try {
           post('setproject', this.project).then(response => {
             console.log(response)
+            this.setProject();
+            this.editable = false;
           })
           .catch(err => {
             console.error(err);
@@ -186,7 +188,6 @@
           console.error(err);
           this.$errorProcess(err);
         }
-        this.editable = false;
       },
       doCancel: function() {
         if (this.isNew) {
@@ -206,34 +207,54 @@
         });
       },
       doReceive: function() {
-
+        this.project.status = this.$getProjectStatusId('received')
+        this.doRegister()
+        this.setProject();
       },
       doDelivery: function() {
-
+        this.project.status = this.$getProjectStatusId('delivered')
+        this.doRegister()
+        this.setProject();
       },
       doAcceptance: function() {
-
+        this.project.status = this.$getProjectStatusId('acceptanced')
+        this.doRegister()
+        this.setProject();
       },
       doPaymented: function() {
-
+        this.project.status = this.$getProjectStatusId('paymented')
+        this.doRegister()
+        this.setProject();
       },
       doLostOrder: function() {
-
+        this.project.status = this.$getProjectStatusId('lostOrder')
+        this.doRegister()
+        this.setProject();
       },
       doReceiveCancel: function() {
-
+        this.project.status = this.$getProjectStatusId('estimation')
+        this.doRegister()
+        this.setProject();
       },
       doDeliveryCancel: function() {
-
+        this.project.status = this.$getProjectStatusId('received')
+        this.doRegister()
+        this.setProject();
       },
       doAcceptanceCancel: function() {
-
+        this.project.status = this.$getProjectStatusId('delivered')
+        this.doRegister()
+        this.setProject();
       },
       doPaymentedCancel: function() {
-
+        this.project.status = this.$getProjectStatusId('acceptanced')
+        this.doRegister()
+        this.setProject();
       },
       doLostOrderCancel: function() {
-
+        this.project.status = this.$getProjectStatusId('estimation')
+        this.doRegister()
+        this.setProject();
       },
       dataUpdate: function(dict, key, value) {
         if (dict === undefined || key === undefined || value === undefined) {
