@@ -207,51 +207,61 @@
         });
       },
       doReceive: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('received')
         this.doRegister()
         this.setProject();
       },
       doDelivery: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('delivered')
         this.doRegister()
         this.setProject();
       },
       doAcceptance: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('acceptanced')
         this.doRegister()
         this.setProject();
       },
       doPaymented: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('paymented')
         this.doRegister()
         this.setProject();
       },
       doLostOrder: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('lostOrder')
         this.doRegister()
         this.setProject();
       },
       doReceiveCancel: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('estimation')
         this.doRegister()
         this.setProject();
       },
       doDeliveryCancel: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('received')
         this.doRegister()
         this.setProject();
       },
       doAcceptanceCancel: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('delivered')
         this.doRegister()
         this.setProject();
       },
       doPaymentedCancel: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('acceptanced')
         this.doRegister()
         this.setProject();
       },
       doLostOrderCancel: function() {
+        this.isProjectLoaded = false
         this.project.status = this.$getProjectStatusId('estimation')
         this.doRegister()
         this.setProject();
@@ -295,6 +305,7 @@
           get('project/'+this.projectNo).then(response => {
             console.log(response.data);
             this.project = response.data;
+            this.isProjectLoaded = true
           })
           .catch(err => {
             console.error(err);
@@ -323,6 +334,7 @@
         try {
           get('selectablememberlist').then(response => {
             this.selectableMembers = response.data;
+            this.isSelectableMembersLoaded = true
           })
           .catch(err => {
             console.error(err);
@@ -338,6 +350,7 @@
           get('selectableclientlist').then(response => {
             this.selectableClients = response.data;
             console.log(response.data);
+            this.isSelectableClientsLoaded = true
           })
           .catch(err => {
             console.error(err);
@@ -353,6 +366,7 @@
           get('selectableothercostkindlist').then(response => {
             this.selectableOtherCostKinds = response.data;
             console.log(response.data);
+            this.isSelectableOtherCostKindsLoaded = true
           })
           .catch(err => {
             console.error(err);
@@ -365,28 +379,6 @@
       }
     },
     watch: {
-      project: {
-        handler() {
-          this.isProjectLoaded = true
-        },
-        deep: true
-      },
-      selectableMembers: {
-        handler() {
-          this.isSelectableMembersLoaded = true
-        },
-        deep: true
-      },
-      selectableClients: {
-        handler() {
-          this.isSelectableClientsLoaded = true
-        }
-      },
-      selectableOtherCostKinds: {
-        handler() {
-          this.isSelectableOtherCostKindsLoaded = true
-        }
-      },
       isLoadend: {
         handler(isLoadend) {
           if (isLoadend) {
